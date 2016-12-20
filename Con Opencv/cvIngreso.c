@@ -1,3 +1,12 @@
+/**********************************************************************************************************************************/
+
+/**
+ * \file 	cvIngreso.c
+ * \brief 	Este modulo contiene las funciones para ingresar que manejan OpenCv
+ * \author 	Tomás Ordóñez, Juan Francisco Reiszer, Santiago Ozan 
+ * \date 	20/12/2016
+ */
+
 /***********************************************************************************************************************************
  *** INCLUDES
  **********************************************************************************************************************************/
@@ -6,12 +15,6 @@
 *** FUNCIONES DEL MODULO
 **********************************************************************************************************************************/
 
-/**
- * \file 	cvIngreso.c
- * \brief 	Este modulo contiene las funciones para ingresar que manejan OpenCv
- * \author 	Tomás Ordóñez, Juan Francisco Reiszer, Santiago Ozan 
- * \date 	20/12/2016
- */
 
 /**
  * \fn 		void crearCampodeTexto(IplImage* imagenFondo)
