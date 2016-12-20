@@ -47,11 +47,14 @@ int Ingresar (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
 }
 
 /**
-	@fn  			int Registro (usu *)
+	@fn  			int Registro (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
 	@brief 			Carga los datos de del usuario que quiere registrarse
  	@author 		Juan Francisco Reiszer, Tomas Ordoñez, Santiago Ozan
  	@date 			20/12/16
- 	@param [in] Datos:	Direccion del buffer a llenar  
+ 	@param [in] 		dir: Direccion del buffer a llenar
+ 	@param [in] 		imagenFondo: puntero a imagen de fondo
+ 	@param [in] 		nombreVentana: Direccion de comienzo del nombre de la ventana
+ 	@param [in] 		i: Variable que indica si hubo un error cuando se quiso ingresar anteriormente
  	@return 		0 por exito
 */
 
