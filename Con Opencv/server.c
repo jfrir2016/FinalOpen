@@ -127,7 +127,7 @@ void* nuevo_thread (void *rs)
     //Recibe seleccion de Menu de Inicio
     if((recv(new_fd,buff,sizeof(USU),0))==-1)
     {
-      fprintf(ffd,"Recv: %s\n",strerror(errno));
+      fprintf(fd,"Recv: %s\n",strerror(errno));
       exit(1);
     }
     if(buff->id==1)
@@ -142,7 +142,7 @@ void* nuevo_thread (void *rs)
     //Envia respuesta
     if((send(new_fd,&id,sizeof(int),0))==-1)
     {
-      fprintf(ffd,"Send: %s\n",strerror(errno));
+      fprintf(fd,"Send: %s\n",strerror(errno));
       exit(1);
     }
   }while(id<0);
@@ -154,7 +154,7 @@ void* nuevo_thread (void *rs)
       //Recivo seleccion
       if((recv(new_fd,&sel,sizeof(int),0))==-1)
       {
-	fprintf(ffd,"Recv: %s\n",strerror(errno));
+	fprintf(fd,"Recv: %s\n",strerror(errno));
 	exit(1);
       }
       sel--;
