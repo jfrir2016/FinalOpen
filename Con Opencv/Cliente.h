@@ -25,10 +25,17 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <netdb.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 /***********************************************************************************************************************************
 *** DEFINES
 **********************************************************************************************************************************/
+
+#define ANCHO 1000
+#define ALTO 700
+#define REC_TAM_Y 25*2
+#define REC_TAM_X 100*2
 
 #define BUFFER 100
 #define CTAM 241
@@ -70,6 +77,34 @@ typedef struct Comentario
 *** PROTOTIPOS DE FUNCIONES
 **********************************************************************************************************************************/
 
-int Registro (usu*);
+int Registro (usu*,IplImage*, char*, int);
 
-int Ingresar (usu*);
+int Ingresar (usu*,IplImage*, char*, int);
+
+int interfaz1 (IplImage*, char*);
+
+void menuInicio (IplImage*);
+
+void leerCampodeTexto (char*, IplImage*,usu*);
+
+void crearCampodeTexto (IplImage*);
+
+void errorInicio(IplImage*);
+
+void cvMostrarTitulo (IplImage*);
+
+int menuPrincipal(IplImage*,char*, int);
+
+int cvListarPost(IplImage*, char*,int);
+
+void cvResultadoBorrarPub(IplImage*, int);
+
+int cvBajaUsuario(IplImage*, char*, int);
+
+void cvLeerCamposPost(IplImage*,char*,post*);
+
+void cvCrearCamposPost(IplImage*);
+
+void cvCrearPublicacion (IplImage* , char* , post *);
+
+void cvSalir(IplImage* , char*);

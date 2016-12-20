@@ -47,7 +47,7 @@ int Ingresar (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
 }
 
 /**
-	@fn  			int Registro (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
+	@fn  			int Registro (usu *dir, IplImage* imagenFondo, char* nombreVentana,int i)
 	@brief 			Carga los datos de del usuario que quiere registrarse
  	@author 		Juan Francisco Reiszer, Tomas Ordoñez, Santiago Ozan
  	@date 			20/12/16
@@ -58,7 +58,7 @@ int Ingresar (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
  	@return 		0 por exito
 */
 
-int Registro (usu *Datos)
+int Registro (usu *Datos, IplImage* imagenFondo, char* nombreVentana,int i)
 {
   char Aux[8];
   int a=0,i;
