@@ -15,36 +15,22 @@
  	@return 	0 por exito
 */
 
-int Ingresar (usu *dir)
+int Ingresar (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
 {
-  int a=0;
+  cvZero(imagenFondo);
   
-  system("clear");
-  do
-  {
-    a=0;
-    printf("Ingrese Nombre de Usuario: ");
-    scanf("%s",dir->Usuario);
-    //Verificamos que no supere 20 caracteres
-    if(strlen(dir->Usuario)>20)
-    {
-      a=1;
-      system("clear");
-      printf("ERROR: Nombre de Usuario demasiado Largo\n\n");
-    }
-  if(a!=1)
-    {
-      printf("Ingrese Contraseña: ");
-      scanf("%s",dir->Contra);
-      if(strlen(dir->Contra)>8)
-      {
-	a=1;
-	system("clear");
-	printf("ERROR: Contraseña demasiado Larga\n\n");
-      }
-    }
-  }while(a);
+  cvMostrarTitulo(imagenFondo);
+  crearCampodeTexto(imagenFondo);
+  
+  if(i==-1) errorInicio(imagenFondo);
+  
+  //Mostramos la imagen
+  cvShowImage (nombreVentana,imagenFondo);
+  
+  leerCampodeTexto(nombreVentana, imagenFondo, dir);
+  
   dir->id=1;
+
   return 0;
 }
 

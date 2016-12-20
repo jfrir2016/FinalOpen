@@ -24,7 +24,7 @@ int main(void)
   post bufp;
   com bufc;
   //Puntero a funcion del menu de Inicio
-  int (*Menu1[])(usu*)={Ingresar,Registro};
+  int (*Menu1[])(usu*,IplImage*,char*,int)={Ingresar,Registro};
   
   struct sockaddr_in server_addr;
   struct sockaddr_in my_addr;
@@ -50,26 +50,43 @@ int main(void)
     perror("Connect");
     exit(1);
   }
+    //Creamos una ventana de tamaño ALTOxANCHO
+  cvNamedWindow("Ventana",  CV_WINDOW_NORMAL);
+  cvResizeWindow("Ventana", ANCHO, ALTO);
+
+  //Creamos una imagen de fondo que podamos modificar del mismo tamaño que la pantalla
+  IplImage* imagenFondo = cvCreateImage(cvSize(ANCHO,ALTO), 8, 3);
   
-  system("clear");
   do
   {
-    do
+    if(i!=-1)
     {
-      b=0;
-      printf("\t\tMenu de Inicio\n1)Ingresar\n2)Registrarse\n\n0)Salir\n");
-      scanf("%d",&a);
-      if(a!=1&&a!=2&&a!=0)
-      {
-	system("clear");
-	b=1;
-      }
-    }while(b);
+      //Se genera la interfaz y se asigna la seleccion a la variable a
+      do
+	a=interfaz1(imagenFondo,"Ventana");
+      while(a!=1&&a!=2&&a!=0);
+    }
+    else 
+      a=1;
+    
     if(a!=0)
     {
-      a--;
-      //Llamo a funcion Ingresar o Registrarse
-      Menu1[a](&buff);
+      if(a==1)
+      {
+	cvResizeWindow("Ventana",1,1);
+	//cvReleaseImage(&imagenFondo);
+	//cvDestroyAllWindows();
+	//cvWaitKey(2);
+      }
+      Menu1[a](&buff,imagenFondo,"Ventana",i);	//Llamo a funcion Ingresar o Registrarse
+      if(a==1)
+      {
+	//Creamos una ventana de tamaño ALTOxANCHO
+	//cvNamedWindow("Ventana",  CV_WINDOW_NORMAL);
+	cvResizeWindow("Ventana", ANCHO, ALTO);
+	//Creamos una imagen de fondo que podamos modificar del mismo tamaño que la pantalla
+	// imagenFondo = cvCreateImage(cvSize(ANCHO,ALTO), 8, 3);
+      }
     }
     else
       buff.id=0;
@@ -86,8 +103,7 @@ int main(void)
       perror("Recv");
       exit(1);
     }
-    system("clear");
-    printf("Usuario o Contraseña icorrecta\n\n");
+    i=id;
   }while(id<0);
   
   system("clear");
@@ -97,18 +113,12 @@ int main(void)
     close(sockfd);
     exit (0);
   }
-  if(id==1)
-    printf("Ingresó como administrador\n\n");
-  
+    
   do
   {
     do
-    {
-      printf("\t\tMenu Principal\n1)Ver Publicaciones\n2)Crear Publicacion\n3)Borrar Publicacion\n4)Darse de Baja\n5)Salir\n");
-      fflush(stdin);
-      scanf("%d",&a);
-      system("clear");
-    }while(a!=1&&a!=2&&a!=3&&a!=4&&a!=5);
+      a=menuPrincipal(imagenFondo,"Ventana",id);
+    while(a!=1&&a!=2&&a!=3&&a!=4&&a!=5);
     
     //Envio seleccion
     if((send(sockfd,&a,sizeof(int),0))==-1)
@@ -120,6 +130,8 @@ int main(void)
     switch(a)
     {
       case 1:
+	fflush(stdout);
+	system("clear");
 	//Recivo cantidad
 	if((recv(sockfd,&cant,sizeof(int),0))==-1)
 	{
@@ -240,21 +252,12 @@ int main(void)
 	break;
 	
       case 2:
-	printf("Ingrese Titulo de Publicacion\n");
-	getchar();
-	scanf("%100[^\r\n]",bufp.titulo);
-	printf("Ingrese Cuerpo de Publicacion\n");
-	getchar();
-	scanf("%500[^\r\n]",bufp.contenido);
-	fflush(stdin);
-	//Envio buffer con el contenido de la publicacion
-	if((send(sockfd,&bufp,sizeof(post),0))==-1)
+	cvCrearPublicacion(imagenFondo,"Ventana", &bufp);
+	if((send(sockfd,&bufp,sizeof(post),0))==-1)	//Envio seleccion
 	{
 	  perror("Send");
 	  exit(1);
 	}
-	system("clear");
-	printf("Publicacion creada con exito\n\n");
 	break;
 	
       case 3:
@@ -300,26 +303,17 @@ int main(void)
 	break;
 	
       case 4:
-	if((recv(sockfd,&cant,sizeof(int),0))==-1)
-	{
-	  perror("Recv");
-	  exit(1);
-	}
-	if(cant==0)
-	{
-	  printf("Se ha dado de baja\n");
-	  break;
-	}
-	printf("No se pudo dar de baja\n");
+	cvBajaUsuario(imagenFondo,"Ventana",sockfd);
 	break;
 	
       case 5:
-	printf("Hasta Luego\n\n");
+	cvSalir(imagenFondo,"Ventana");
 	break;
     }
   }while(a<4);
   //Cierro socket
   close(sockfd);
-  
+  //Cierro ventana
+  cvReleaseImage(&imagenFondo);
   return 0;
 }
