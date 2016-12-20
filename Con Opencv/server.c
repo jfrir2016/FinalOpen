@@ -32,7 +32,7 @@ int main (void)
   //Creo el socket y guardo su descriptor
   if((sockfd= socket(AF_INET, SOCK_STREAM, 0))==-1)
   {
-      perror("Socket");
+      fprintf(ffd,"Socket: %s\n",strerror(errno));
       exit(1);
   }
   //Ingreso y cargo con bind la info del server
@@ -46,13 +46,13 @@ int main (void)
   //Configuro la señal SIGINT del Ctrl+C a la funcion sig_finish
   if(signal(SIGINT,sig_finish) == SIG_ERR)
   {
-    perror("Signal");
+    fprintf(ffd,"Signal: %s\n",strerror(errno));
     exit(1);
   }
   
   if((bind(sockfd,(struct sockaddr *)&server_addr, sizeof(struct sockaddr)))==-1)
   {
-    perror("Bind");
+    fprintf(ffd,"Bind: %s\n",strerror(errno));
     exit(1);
   }
   
@@ -67,7 +67,7 @@ int main (void)
   //Configuro la cola de espera
   if(listen(sockfd,MEMSET)==-1)
   {
-    perror("Listen");
+    fprintf(ffd,"Listen: %s\n",strerror(errno));
     exit(1);
   }
   
@@ -77,7 +77,7 @@ int main (void)
     //Espero que se conecte un cliente
     if((new_fd=accept(sockfd,(struct sockaddr *)&client_addr,(socklen_t*)&size))==-1)
     {
-	perror("Accept");
+	fprintf(ffd,"Accept: %s\n",strerror(errno));
 	exit (1);
     }
     
@@ -127,7 +127,7 @@ void* nuevo_thread (void *rs)
     //Recibe seleccion de Menu de Inicio
     if((recv(new_fd,buff,sizeof(USU),0))==-1)
     {
-      perror("Recv");
+      fprintf(ffd,"Recv: %s\n",strerror(errno));
       exit(1);
     }
     if(buff->id==1)
@@ -142,7 +142,7 @@ void* nuevo_thread (void *rs)
     //Envia respuesta
     if((send(new_fd,&id,sizeof(int),0))==-1)
     {
-      perror("Send");
+      fprintf(ffd,"Send: %s\n",strerror(errno));
       exit(1);
     }
   }while(id<0);
@@ -154,7 +154,7 @@ void* nuevo_thread (void *rs)
       //Recivo seleccion
       if((recv(new_fd,&sel,sizeof(int),0))==-1)
       {
-	perror("Recv");
+	fprintf(ffd,"Recv: %s\n",strerror(errno));
 	exit(1);
       }
       sel--;
