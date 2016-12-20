@@ -53,8 +53,9 @@ int BorrarCom (int fd, POST *pp, int id)
     {
       sel=1;
       //Envio 1 por exito
-      {
+      
       if((send(fd,&sel,sizeof(int),0))==-1)
+      {
 	perror("Send");
 	return 1;
       }
