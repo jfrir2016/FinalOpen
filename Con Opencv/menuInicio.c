@@ -58,7 +58,7 @@ int Ingresar (usu *dir,IplImage* imagenFondo, char* nombreVentana,int i)
  	@return 		0 por exito
 */
 
-int Registro (usu *Datos, IplImage* imagenFondo, char* nombreVentana,int i)
+int Registro (usu *Datos, IplImage* imagenFondo, char* nombreVentana,int j)
 {
   char Aux[8];
   int a=0,i;

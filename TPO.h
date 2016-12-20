@@ -12,7 +12,6 @@
 #include <signal.h>
 #include <netdb.h>
 #include <pthread.h>
-#include <errno.h>
 
 #define FUSU "Usuarios"
 #define FPUB "Posts"

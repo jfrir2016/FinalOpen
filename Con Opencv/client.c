@@ -71,22 +71,15 @@ int main(void)
     
     if(a!=0)
     {
+      a--;
       if(a==1)
       {
 	cvResizeWindow("Ventana",1,1);
-	//cvReleaseImage(&imagenFondo);
-	//cvDestroyAllWindows();
-	//cvWaitKey(2);
+	cvWaitKey(1);
+	cvMoveWindow("Ventana",1000,1000);
+	cvWaitKey(1);
       }
       Menu1[a](&buff,imagenFondo,"Ventana",i);	//Llamo a funcion Ingresar o Registrarse
-      if(a==1)
-      {
-	//Creamos una ventana de tamaño ALTOxANCHO
-	//cvNamedWindow("Ventana",  CV_WINDOW_NORMAL);
-	cvResizeWindow("Ventana", ANCHO, ALTO);
-	//Creamos una imagen de fondo que podamos modificar del mismo tamaño que la pantalla
-	// imagenFondo = cvCreateImage(cvSize(ANCHO,ALTO), 8, 3);
-      }
     }
     else
       buff.id=0;
@@ -116,6 +109,8 @@ int main(void)
     
   do
   {
+    cvResizeWindow("Ventana", ANCHO, ALTO);
+    cvMoveWindow("Ventana",1,1);
     do
       a=menuPrincipal(imagenFondo,"Ventana",id);
     while(a!=1&&a!=2&&a!=3&&a!=4&&a!=5);
@@ -132,6 +127,10 @@ int main(void)
       case 1:
 	fflush(stdout);
 	system("clear");
+	cvResizeWindow("Ventana",1,1);
+	cvWaitKey(1);
+	cvMoveWindow("Ventana",1000,1000);
+	cvWaitKey(1);
 	//Recivo cantidad
 	if((recv(sockfd,&cant,sizeof(int),0))==-1)
 	{
@@ -261,6 +260,12 @@ int main(void)
 	break;
 	
       case 3:
+	fflush(stdout);
+	system("clear");
+	cvResizeWindow("Ventana",1,1);
+	cvWaitKey(1);
+	cvMoveWindow("Ventana",1000,1000);
+	cvWaitKey(1);
 	if((recv(sockfd,&cant,sizeof(int),0))==-1)
 	{
 	  perror("Recv");
@@ -311,9 +316,12 @@ int main(void)
 	break;
     }
   }while(a<4);
+  fflush(stdout);
+  system("clear");
   //Cierro socket
   close(sockfd);
   //Cierro ventana
+  cvDestroyWindow("Ventana");
   cvReleaseImage(&imagenFondo);
   return 0;
 }

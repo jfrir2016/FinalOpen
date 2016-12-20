@@ -12,6 +12,7 @@ int main(void)
   usu buff;
   post bufp;
   com bufc;
+  
  int (*Menu1[])(usu*,IplImage*,char*,int)={Ingresar,Registro};
 	
   struct sockaddr_in server_addr;
@@ -33,6 +34,7 @@ int main(void)
     exit(1);
   }
   
+  
   if((connect(sockfd, (struct sockaddr*)&server_addr, sizeof(struct sockaddr_in)))==-1)
   {
     perror("Connect");
@@ -51,9 +53,11 @@ int main(void)
   {
     if(i!=-1)
       //Se genera la interfaz y se asigna la seleccion a la variable a
+    {
       do
 	a=interfaz1(imagenFondo,"Ventana");
       while(a!=1&&a!=2&&a!=0);
+    }
     else a=1;
 
     if(a!=0)
@@ -62,9 +66,9 @@ int main(void)
       if(a==1)
       {
 	cvResizeWindow("Ventana",1,1);
-	//cvReleaseImage(&imagenFondo);
-	//cvDestroyAllWindows();
-	//cvWaitKey(2);
+	cvWaitKey(1);
+	cvMoveWindow("Ventana",1600,1600);
+	cvWaitKey(1);
       }
       Menu1[a](&buff,imagenFondo,"Ventana",i);	//Llamo a funcion Ingresar o Registrarse
      if(a==1)
@@ -72,7 +76,8 @@ int main(void)
        //Creamos una ventana de tamaño ALTOxANCHO
        //cvNamedWindow("Ventana",  CV_WINDOW_NORMAL);
        cvResizeWindow("Ventana", ANCHO, ALTO);
-
+       cvMoveWindow("Ventana",1,1);
+       cvWaitKey(1);
        //Creamos una imagen de fondo que podamos modificar del mismo tamaño que la pantalla
       // imagenFondo = cvCreateImage(cvSize(ANCHO,ALTO), 8, 3);
      }

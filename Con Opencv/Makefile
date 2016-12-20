@@ -3,7 +3,7 @@ CFLAGS = -c -g -Wall
 LDFLAGS = -lpthread
 LIBS = -lopencv_core -lopencv_highgui -lopencv_imgproc
 OBJS = server.o postFuns.o usuFuns.o borrarCom.o guardarListas.o levantarListas.o agregarNodo.o borrarNodo.o sig_finish.o
-OBJTS = client.o menuInicio.o
+OBJTS = client.o menuInicio.o cvIngreso.o cvMenues.o cvPublicaciones.o cvResultados.o
 
 All : CliExe SerExe Del
 

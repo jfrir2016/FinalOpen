@@ -36,7 +36,7 @@
 #define FPUB "Posts"
 #define FERROR "errorFile"
 
-#define PORT 43311
+#define PORT 43210
 #define CTAM 241
 #define BUFFER 15
 #define MEMSET 10
